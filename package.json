@@ -1,0 +1,42 @@
+{
+  "name": "dadiprojectmanage",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.0.96",
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "bootstrap": "^5.2.0",
+    "connect-history-api-fallback": "^2.0.0",
+    "cors": "^2.8.5",
+    "element-plus": "^2.2.12",
+    "express": "^4.18.1",
+    "jquery": "^3.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.19",
+    "require-yml": "^2.0.0",
+    "sass": "^1.54.1",
+    "sass-loader": "^13.0.2",
+    "sequelize": "^6.21.4",
+    "sequelize-auto": "^0.8.8",
+    "vue": "^3.2.37",
+    "vue-cal": "^4.3.4",
+    "vue-router": "^4.1.2"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@vitejs/plugin-vue": "^3.0.1",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "prettier": "^2.5.1",
+    "vite": "^3.0.1"
+  }
+}

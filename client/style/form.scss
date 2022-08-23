@@ -1,0 +1,37 @@
+/* form */
+
+.el-form-item {
+  margin-bottom: 35px;
+}
+
+.el-form-item__label {
+  position: absolute;
+  background: #fff;
+  padding: 0 0.3rem;
+  margin-left: 0.3rem;
+  margin-top: -10px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: normal;
+  font-size: 0.75rem;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.left-side {
+  width: 50%;
+}
+
+.right-side {
+  width: 50%;
+}
+
+.total-show {
+  font-size: 30px;
+  float: right;
+  width: fit-content;
+}
+
+.el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--el-text-color-regular) inset;
+}

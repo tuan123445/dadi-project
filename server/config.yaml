@@ -1,0 +1,21 @@
+# Database connection setting
+# ===================================
+
+database:
+  timezone: +09:00
+  dialect: mysql
+  enableSyncTable: false
+
+  development: # Development database
+    host: localhost
+    port: 3306
+    database: dadi_manager
+    username: root
+    password: root
+
+  production: # Production database
+    host: localhost
+    port: 3306
+    database: dadi_manager
+    username: root
+    password: root

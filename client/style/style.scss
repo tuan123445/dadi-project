@@ -1,0 +1,38 @@
+@font-face {
+  font-family: Apeiron;
+  src: url(Apeiron-fonts.0f5214c0.woff) format("woff");
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  -moz-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+#app,
+.app {
+  height: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  .notFoundPage,
+  .loginPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 300px;
+    }
+  }
+}
