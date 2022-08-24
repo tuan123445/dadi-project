@@ -19,6 +19,9 @@
         </template>
       </el-menu>
     </div>
+    <div class="sign-out-btn">
+      <el-button type="info" @click="signOut()">sign out</el-button>
+    </div>
   </div>
 </template>
 
@@ -40,6 +43,20 @@ export default {
         this.menuItemList.push(item);
       });
     },
+    signOut() {
+      this.$router.push("/login");
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.header {
+  position: relative;
+  .sign-out-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+</style>

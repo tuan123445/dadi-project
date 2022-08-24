@@ -14,12 +14,24 @@
               <FontChangeCom :text="'Login'" :id="'login'"></FontChangeCom>
             </div>
           </div>
-          <el-form :model="modelForm">
-            <el-form-item label="Email" prop="email">
-              <el-input v-model="modelForm.email"></el-input>
+          <el-form :ref="modal.formName" :model="modal.formData">
+            <el-form-item
+              label="Email"
+              prop="email"
+              :rules="[$rules.required, $rules.requiredEmail]"
+            >
+              <el-input v-model="modal.formData.email"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password">
-              <el-input v-model="modelForm.password"></el-input>
+            <el-form-item
+              label="Password"
+              prop="password"
+              :rules="[$rules.required]"
+            >
+              <el-input
+                v-model="modal.formData.password"
+                type="password"
+                show-password
+              ></el-input>
             </el-form-item>
           </el-form>
           <div class="bottom-btn">
@@ -36,12 +48,24 @@
               <FontChangeCom :text="'Sign In'" :id="'signIn'"></FontChangeCom>
             </div>
           </div>
-          <el-form :model="modelForm">
-            <el-form-item label="Email" prop="email">
-              <el-input v-model="modelForm.email"></el-input>
+          <el-form :ref="modal.formName" :model="modal.formData">
+            <el-form-item
+              label="Email"
+              prop="email"
+              :rules="[$rules.required, $rules.requiredEmail]"
+            >
+              <el-input v-model="modal.formData.email"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password">
-              <el-input v-model="modelForm.password"></el-input>
+            <el-form-item
+              label="Password"
+              prop="password"
+              :rules="[$rules.required]"
+            >
+              <el-input
+                v-model="modal.formData.password"
+                type="password"
+                show-password
+              ></el-input>
             </el-form-item>
           </el-form>
           <div class="bottom-btn">
@@ -55,20 +79,36 @@
 
 <script>
 import FontChangeCom from "../../components/ApeironFontChangeCom.vue";
+import Api from "../../api/index";
+import { helper, mixins } from "../../core/index";
 export default {
   components: {
     FontChangeCom: FontChangeCom,
   },
+  mixins: [mixins],
   data() {
     return {
-      modelForm: {},
       activeName: "login",
     };
   },
   methods: {
-    login() {},
-    signIn() {},
-    handleClick() {},
+    login() {
+      helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
+        if (result === false) return;
+        Api.login.auth(this.modal.formData).then((rs) => {
+          if (rs) this.$router.push({ name: "projectManagement" });
+        });
+      });
+    },
+    signIn() {
+      helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
+        if (result === false) return;
+        Api.login.signIn(this.modal.formData).then((rs) => {});
+      });
+    },
+    handleClick() {
+      this.modal.formData = helper.clearData(this.modal.formData);
+    },
   },
 };
 </script>
