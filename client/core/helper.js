@@ -58,6 +58,33 @@ helper.popup = {
   }
 }
 
+import {
+  ElMessage as euiMessage
+} from "element-plus";
+
+const toastInit = (mes, type) => {
+  return euiMessage({
+    showClose: true,
+    message: mes,
+    type: type
+  });
+}
+
+helper.toast = {
+  success: (mes) => {
+    return toastInit(mes, "success");
+  },
+  warning: (mes) => {
+    return toastInit(mes, "warning");
+  },
+  info: (mes) => {
+    return toastInit(mes, "info");
+  },
+  error: (mes) => {
+    return toastInit(mes, "error");
+  },
+}
+
 
 helper.validateForm = function (ref, confirm = false) {
   return new Promise((rex, rej) => {
@@ -82,14 +109,11 @@ helper.validateForm = function (ref, confirm = false) {
 };
 
 helper.clearData = function (data = []) {
-  console.log(data);
   if (data.length <= 0) return;
   let temp = {};
   Object.keys(data).forEach((key) => {
     temp[key] = undefined;
   });
-  console.log(temp);
-
   return temp;
 };
 

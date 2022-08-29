@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
+const jwt = require("jsonwebtoken");
+const config = require("./config");
 const consts = require("./utils/const");
 
 function helperResponseInit(_res, _msg) {
@@ -33,6 +35,17 @@ let helper = {
       });
     },
   },
+  token: {
+    create(data) {
+      return jwt.sign(data, config.tokenPrivateKey);
+    },
+    decode(data) {
+      return jwt.verify(data, config.tokenPrivateKey, function (err, token) {
+        if (err) throw new Error(err);
+        return token;
+      })
+    }
+  }
 };
 
 module.exports = helper;

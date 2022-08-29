@@ -10,5 +10,15 @@ export default {
     return Api().post("/api/login/signIn", value).then((rs) => {
       return rs.data;
     });
+  },
+  checkDuplicate(value) {
+    return Api().post("/api/login/checkDuplicate", value).then((rs) => {
+      return rs.data;
+    });
+  },
+  checkRouter(value) {
+    return Api().post("/api/login/checkRouter", value).then((rs) => {
+      return rs.data;
+    });
   }
 };

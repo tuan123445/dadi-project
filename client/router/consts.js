@@ -5,4 +5,5 @@ export default {
     sugarManagement: "sugarManagement",
     calendarView: "calendarView"
   },
+  login: "login"
 };

@@ -59,7 +59,7 @@
             <el-form-item
               label="Password"
               prop="password"
-              :rules="[$rules.required]"
+              :rules="[$rules.required, passwordStrongRule]"
             >
               <el-input
                 v-model="modal.formData.password"
@@ -87,8 +87,16 @@ export default {
   },
   mixins: [mixins],
   data() {
+    var checkStrongPass = async (rule, value, callback) => {
+      if (!value) return;
+      if (value.length <= 6) callback("password is too weak");
+    };
     return {
       activeName: "login",
+      passwordStrongRule: {
+        validator: checkStrongPass,
+        trigger: "change",
+      },
     };
   },
   methods: {
@@ -96,18 +104,27 @@ export default {
       helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
         if (result === false) return;
         Api.login.auth(this.modal.formData).then((rs) => {
-          if (rs) this.$router.push({ name: "projectManagement" });
+          if (rs.status === true) {
+            return this.$router.push({ name: "projectManagement" });
+          }
+          return helper.toast.error(rs.mes);
         });
       });
     },
     signIn() {
       helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
         if (result === false) return;
-        Api.login.signIn(this.modal.formData).then((rs) => {});
+        Api.login.checkDuplicate(this.modal.formData).then((dup) => {
+          if (dup) return helper.toast.error("email is already used");
+          return Api.login.signIn(this.modal.formData).then(() => {
+            this.$refs[this.modal.formName].resetFields();
+            return helper.toast.success("email created");
+          });
+        });
       });
     },
     handleClick() {
-      this.modal.formData = helper.clearData(this.modal.formData);
+      this.$refs[this.modal.formName].resetFields();
     },
   },
 };

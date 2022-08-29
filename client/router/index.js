@@ -4,6 +4,7 @@ import {
   createWebHistory
 } from "vue-router";
 import routerName from "./consts.js";
+import Api from "../api/index.js";
 
 const router = createRouter({
   history: createWebHistory(
@@ -24,6 +25,9 @@ const router = createRouter({
     {
       path: "/admin",
       name: "admin",
+      meta: {
+        requireLogin: true
+      },
       component: () => import("../views/admin/shared/template.vue"),
       redirect: {
         name: "projectManagement"
@@ -32,7 +36,8 @@ const router = createRouter({
           path: "/admin/projectManagement",
           name: routerName.admin.projectManagement,
           meta: {
-            name: "Project Management"
+            name: "Project Management",
+            requireLogin: true
           },
           component: () => import("../views/admin/projectManagement.vue")
         },
@@ -40,7 +45,8 @@ const router = createRouter({
           path: "/admin/sugarManagement",
           name: routerName.admin.sugarManagement,
           meta: {
-            name: "Sugar Management"
+            name: "Sugar Management",
+            requireLogin: true
           },
           component: () => import("../views/admin/sugarManagement.vue")
         },
@@ -48,7 +54,8 @@ const router = createRouter({
           path: "/admin/calendarView",
           name: routerName.admin.calendarView,
           meta: {
-            name: "Calendar"
+            name: "Calendar",
+            requireLogin: true
           },
           component: () => import("../views/admin/calendarView.vue")
         }
@@ -60,5 +67,21 @@ const router = createRouter({
     }
   ],
 });
+
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(rs => rs.meta.requireLogin) === true) {
+//     return Api.login.checkRouter().then(result => {
+//       if (result.status === false) {
+//         return next({
+//           name: routerName.login
+//         });
+//       }
+//       return next();
+//     });
+//   }
+//   return next();
+// });
+
+
 
 export default router;
