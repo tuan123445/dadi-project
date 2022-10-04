@@ -1,22 +1,15 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
-    user_id: {
+  return sequelize.define('form_per_week_projects', {
+    form_id: {
       type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },
-    user_email: {
+    project_id: {
       type: DataTypes.STRING(45),
-      allowNull: true
-    },
-    password: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    user_permision: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      primaryKey: true
     },
     date_created: {
       type: DataTypes.DATE,
@@ -28,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'form_per_week_projects',
     timestamps: false,
     indexes: [
       {
@@ -36,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "user_id" },
+          { name: "form_id" },
+          { name: "project_id" },
         ]
       },
     ]

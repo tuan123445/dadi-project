@@ -18,18 +18,18 @@ router.post("/checkRouter", (req, res) => {
         status: false,
       });
     }
-
     return helper.response.json(res, {
-      status: true
+      status: true,
+      userInfo: userInfo
     });
-  })
+  });
 });
 
 router.post("/auth", (req, res) => {
   let body = req.body;
 
   let query = `
-    SELECT * from users
+    SELECT * FROM users
     WHERE user_email = :email
   `;
 
@@ -62,7 +62,7 @@ router.post("/auth", (req, res) => {
     return helper.response.json(res, {
       status: false,
       mes: "Password is wrong"
-    })
+    });
   });
 });
 
@@ -70,14 +70,28 @@ router.post("/signIn", (req, res) => {
   let body = req.body;
 
   let token = helper.token.create(body.password);
-  let insertData = {
+  let setId = helper.makeid(5);
+  let insertDataForUser = {
+    user_id: setId,
     user_email: body.email,
     password: token,
     user_permision: 0
   }
+  return db.sequelize.transaction((tx) => {
+    return new Promise(rex => rex()).then(() => {
+      return db.helper.insert(db.table.users, insertDataForUser, null, tx).then(rs => {
+        if (!rs) return;
+        let insertDataForUserInfo = {
+          user_id: setId,
+          id_discord: body.idDiscord,
+          wallet_address: body.wallet
+        }
 
-  db.helper.insert(db.table.users, insertData).then(rs => {
-    return helper.response.created(res);
+        return db.helper.insert(db.table.users_information, insertDataForUserInfo, null, tx).then(() => {
+          return helper.response.created(res);
+        })
+      });
+    });
   }).catch((err) => {
     return helper.response.error(res, err);
   });

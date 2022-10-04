@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderView></HeaderView>
-    <router-view class="body-wrapper" />
+    <router-view />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
 import {
   ElMessageBox as euiMessageBox
 } from "element-plus";
@@ -95,7 +95,7 @@ helper.validateForm = function (ref, confirm = false) {
       })
     }
 
-    ref.validate((valid) => {
+    return ref.validate((valid) => {
       if (!valid) return this.popup.error("Please input required input!", lib.popupType.error)
       if (!valid) return;
       if (confirm === false) return rex(true);

@@ -1,8 +1,8 @@
 <template>
   <main>
     <SugarComponent
-      :title="'Sugar Management'"
-      :isManager="true"
+      :title="'Sugar Request'"
+      :isManager="false"
     ></SugarComponent>
   </main>
 </template>

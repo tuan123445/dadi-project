@@ -1,31 +1,25 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('form_per_week', {
-    user_id: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-      primaryKey: true
-    },
-    year: {
+  return sequelize.define('shop', {
+    item_id: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    month: {
+    item_name: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    item_detail: {
+      type: DataTypes.STRING(500),
+      allowNull: true
+    },
+    item_cost: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      allowNull: true
     },
-    week: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    form_id: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
-    sugar_received: {
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -39,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'form_per_week',
+    tableName: 'shop',
     timestamps: false,
     indexes: [
       {
@@ -47,10 +41,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "user_id" },
-          { name: "year" },
-          { name: "month" },
-          { name: "week" },
+          { name: "item_id" },
         ]
       },
     ]

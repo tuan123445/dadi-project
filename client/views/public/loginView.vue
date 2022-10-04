@@ -48,13 +48,13 @@
               <FontChangeCom :text="'Sign In'" :id="'signIn'"></FontChangeCom>
             </div>
           </div>
-          <el-form :ref="modal.formName" :model="modal.formData">
+          <el-form :ref="modal.signInFormName" :model="modal.formData.signIn">
             <el-form-item
               label="Email"
               prop="email"
               :rules="[$rules.required, $rules.requiredEmail]"
             >
-              <el-input v-model="modal.formData.email"></el-input>
+              <el-input v-model="modal.formData.signIn.email"></el-input>
             </el-form-item>
             <el-form-item
               label="Password"
@@ -62,10 +62,24 @@
               :rules="[$rules.required, passwordStrongRule]"
             >
               <el-input
-                v-model="modal.formData.password"
+                v-model="modal.formData.signIn.password"
                 type="password"
                 show-password
               ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="Id Discord"
+              prop="idDiscord"
+              :rules="[$rules.required]"
+            >
+              <el-input v-model="modal.formData.signIn.idDiscord"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="Wallet (Polygon)"
+              prop="wallet"
+              :rules="[$rules.required]"
+            >
+              <el-input v-model="modal.formData.signIn.wallet"></el-input>
             </el-form-item>
           </el-form>
           <div class="bottom-btn">
@@ -93,6 +107,13 @@ export default {
     };
     return {
       activeName: "login",
+      modal: {
+        signInFormName: "signInForm",
+        formData: {
+          signIn: {},
+        },
+        formName: "formData",
+      },
       passwordStrongRule: {
         validator: checkStrongPass,
         trigger: "change",
@@ -112,19 +133,25 @@ export default {
       });
     },
     signIn() {
-      helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
-        if (result === false) return;
-        Api.login.checkDuplicate(this.modal.formData).then((dup) => {
-          if (dup) return helper.toast.error("email is already used");
-          return Api.login.signIn(this.modal.formData).then(() => {
-            this.$refs[this.modal.formName].resetFields();
-            return helper.toast.success("email created");
+      helper
+        .validateForm(this.$refs[this.modal.signInFormName])
+        .then((result) => {
+          if (result === false) return;
+          Api.login.checkDuplicate(this.modal.formData.signIn).then((dup) => {
+            if (dup) return helper.toast.error("email is already used");
+            return Api.login.signIn(this.modal.formData.signIn).then(() => {
+              this.$refs[this.modal.signInFormName].resetFields();
+              return helper.toast.success("email created");
+            });
           });
         });
-      });
     },
-    handleClick() {
-      this.$refs[this.modal.formName].resetFields();
+    handleClick(val) {
+      if (val.props.name === "signin") {
+        return this.$refs[this.modal.signInFormName].resetFields();
+      } else {
+        return this.$refs[this.modal.formName].resetFields();
+      }
     },
   },
 };

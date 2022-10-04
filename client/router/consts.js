@@ -1,9 +1,22 @@
 /* eslint-disable prettier/prettier */
 export default {
   admin: {
-    projectManagement: "projectManagement",
-    sugarManagement: "sugarManagement",
-    calendarView: "calendarView"
+    project: {
+      projectManagment: "projectManagement",
+      projectSubmit: "projectSubmit"
+    },
+    form: {
+      formManagement: "formManagement",
+      formSubmit: "formSubmit",
+    },
+    sugar: {
+      sugarManagement: "sugarManagement",
+      sugarRequest: "sugarRequest"
+    },
+    calendarView: "calendarView",
+    usersManager: "usersManager",
+    shop: "shop"
   },
-  login: "login"
+  login: "login",
+  profile: "profile"
 };

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('form_per_week', {
+  return sequelize.define('form_sugar_per_week', {
     user_id: {
       type: DataTypes.STRING(45),
       allowNull: false,
@@ -25,10 +25,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false
     },
-    sugar_received: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     date_created: {
       type: DataTypes.DATE,
       allowNull: true
@@ -39,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'form_per_week',
+    tableName: 'form_sugar_per_week',
     timestamps: false,
     indexes: [
       {

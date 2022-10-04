@@ -1,8 +1,8 @@
 <template>
   <main>
     <ProjectManagementComponent
-      :isManager="true"
-      :title="'Project Management'"
+      :isManager="false"
+      :title="'Project Submit'"
     ></ProjectManagementComponent>
   </main>
 </template>

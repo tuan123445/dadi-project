@@ -2,18 +2,9 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('projects_information', {
     project_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    leader_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    created_person_id: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false,
+      primaryKey: true
     },
     project_name: {
       type: DataTypes.STRING(45),
@@ -25,6 +16,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     project_link: {
       type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    category: {
+      type: DataTypes.STRING(45),
+      allowNull: true
+    },
+    leader_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    created_person_id: {
+      type: DataTypes.STRING(45),
       allowNull: true
     },
     status: {

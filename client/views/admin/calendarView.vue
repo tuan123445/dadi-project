@@ -23,9 +23,7 @@ import Api from "../../api/index";
 export default {
   components: { VueCal },
   created() {
-    Api.calendar.getData({ id: 1 }).then((rs) => {
-      console.log(rs);
-    });
+    Api.calendar.getData({ id: 1 }).then((rs) => {});
   },
   data() {
     return {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   createRouter,
@@ -5,6 +6,7 @@ import {
 } from "vue-router";
 import routerName from "./consts.js";
 import Api from "../api/index.js";
+import store from "../core/store";
 
 const router = createRouter({
   history: createWebHistory(
@@ -14,13 +16,21 @@ const router = createRouter({
       name: "home",
       component: () => import("../App.vue"),
       redirect: {
-        name: "login"
+        name: routerName.login
       }
     },
     {
       path: "/login",
-      name: "login",
+      name: routerName.login,
       component: () => import("../views/public/loginView.vue"),
+    },
+    {
+      path: "/profile",
+      name: routerName.profile,
+      meta: {
+        requireLogin: true
+      },
+      component: () => import("../views/public/profileView.vue")
     },
     {
       path: "/admin",
@@ -30,25 +40,111 @@ const router = createRouter({
       },
       component: () => import("../views/admin/shared/template.vue"),
       redirect: {
-        name: "projectManagement"
+        name: routerName.admin.project.projectManagment
       },
       children: [{
-          path: "/admin/projectManagement",
-          name: routerName.admin.projectManagement,
-          meta: {
-            name: "Project Management",
-            requireLogin: true
+          path: "/admin/project",
+          redirect: {
+            name: routerName.admin.project.projectSubmit
           },
-          component: () => import("../views/admin/projectManagement.vue")
+          name: "Project",
+          meta: {
+            name: "Project",
+          },
+          children: [{
+            path: "/admin/projectManagement",
+            meta: {
+              name: "Project Management",
+              requireLogin: true
+            },
+            name: routerName.admin.project.projectManagment,
+            component: () => import("../views/admin/projectManagement.vue")
+          }, {
+            path: "/admin/projectSubmit",
+            meta: {
+              name: "Project Submit",
+              requireLogin: true
+            },
+            name: routerName.admin.project.projectSubmit,
+            component: () => import("../views/admin/projectSubmit.vue")
+          }],
         },
         {
-          path: "/admin/sugarManagement",
-          name: routerName.admin.sugarManagement,
+          path: "/admin/form",
+          redirect: {
+            name: routerName.admin.form.formSubmit
+          },
+          name: "Form",
           meta: {
-            name: "Sugar Management",
+            name: "Form",
+          },
+          children: [{
+              path: "/admin/formManagement",
+              name: routerName.admin.form.formManagement,
+              meta: {
+                name: "Form Management",
+                requireLogin: true
+              },
+              component: () => import("../views/admin/formManagement.vue")
+            },
+            {
+              path: "/admin/formSubmit",
+              name: routerName.admin.form.formSubmit,
+              meta: {
+                name: "Form Submit",
+                requireLogin: false
+              },
+              component: () => import("../views/admin/formSubmit.vue")
+            }
+          ]
+
+        },
+        {
+          path: "/admin/sugar",
+          redirect: {
+            name: routerName.admin.sugar.sugarRequest
+          },
+          name: "Sugar",
+          meta: {
+            name: "Sugar",
+          },
+          children: [{
+              path: "/admin/sugarManagement",
+              name: routerName.admin.sugar.sugarManagement,
+              meta: {
+                name: "Sugar Management",
+                requireLogin: true
+              },
+              component: () => import("../views/admin/sugarManagement.vue")
+            },
+            {
+              path: "/admin/sugarRequest",
+              name: routerName.admin.sugar.sugarRequest,
+              meta: {
+                name: "Sugar Request",
+                requireLogin: false
+              },
+              component: () => import("../views/admin/sugarRequest.vue")
+            }
+          ]
+        },
+        {
+          path: "/admin/usersManager",
+          name: routerName.admin.usersManager,
+          meta: {
+            name: "User Manager",
             requireLogin: true
           },
-          component: () => import("../views/admin/sugarManagement.vue")
+          component: () => import("../views/admin/usersManager.vue")
+        },
+        {
+          path: "/admin/shop",
+          name: routerName.admin.shop,
+          meta: {
+            name: "Shop",
+            requireLogin: true
+          },
+          component: () => import("../views/admin/shopView.vue")
         },
         {
           path: "/admin/calendarView",
@@ -76,6 +172,7 @@ const router = createRouter({
 //           name: routerName.login
 //         });
 //       }
+//       store.state.user_info = result.userInfo;
 //       return next();
 //     });
 //   }
