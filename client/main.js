@@ -22,11 +22,13 @@ import {
   rules,
   filter,
   lib,
-  store
+  store,
+  consts
 } from "./core/index";
 app.config.globalProperties.$rules = rules;
 app.config.globalProperties.$filter = filter;
 app.config.globalProperties.$lib = lib;
+app.config.globalProperties.$consts = consts;
 
 app.use(store);
 app.use(ElementPlus);

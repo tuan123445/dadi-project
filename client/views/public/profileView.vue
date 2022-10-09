@@ -210,7 +210,9 @@ export default {
       this.$router.push({ name: "admin" });
     },
     logOut() {
-      this.$router.push({ name: "login" });
+      Api.login.logOut().then(() => {
+        this.$router.push({ name: "login" });
+      });
     },
     handleConfirm() {
       helper

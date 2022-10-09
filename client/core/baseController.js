@@ -3,10 +3,14 @@
 
 import helper from "./helper";
 import Api from "../api/index";
+import {
+  useStore
+} from "vuex";
 
 export default {
   data() {
     return {
+      api: "",
       modal: {
         editMode: false,
         show: false,
@@ -14,10 +18,18 @@ export default {
         formName: "modalForm",
       },
       tableData: [],
+      loading: true,
     };
   },
   methods: {
-    search() {},
+    getAll() {
+      this.loading = true;
+      Api[this.api].getAll().then(rs => {
+        if (rs && rs.length != 0) this.tableData = rs;
+        console.log(this.tableData);
+        this.loading = false;
+      });
+    },
     showModal(_editMode = false) {
       return new Promise(res => {
         this.modal.show = true;
@@ -36,7 +48,10 @@ export default {
       this.showModal(false);
     },
     handleEdit(row) {
-      this.modal.formData = row;
+      Api[this.api].getItemById(row).then(rs => {
+        this.modal.formData = rs[0];
+      });
+
       this.$nextTick(() => {
         this.showModal(true);
       });
@@ -44,27 +59,46 @@ export default {
     handleConfirm() {
       // edit
       if (this.modal.editMode) {
-        helper.validateForm(this.$refs[this.modal.formName], "Do you want to update the data?").then(() => {
-          // Call api method
-          Api[this.api].update(this.modal.formData).then(() => {
-            this.closeModalAndReSearch();
-          });
+        helper.validateForm(this.$refs[this.modal.formName], "Do you want to update the data?").then(result => {
+          if (!result) return;
+          return new Promise(rex => rex()).then(() => {
+            this.beforeSubmit();
+          }).then(() => {
+            // Call api method
+            Api[this.api].update(this.modal.formData).then(() => {
+              this.closeModalAndReSearch();
+            });
+          })
         });
       }
 
       // create
-      if (this.modal.editMode) {
-        helper.validateForm(this.$refs[this.modal.formName], "Do you want to create?").then(() => {
-          // Call api method
-          Api[this.api].createData(this.modal.formData).then(() => {
-            this.closeModalAndReSearch();
-          });
+      if (!this.modal.editMode) {
+        helper.validateForm(this.$refs[this.modal.formName], "Do you want to create?").then(result => {
+          if (!result) return;
+          return new Promise(rex => rex()).then(() => {
+            this.beforeSubmit();
+          }).then(() => {
+            // Call api method
+            Api[this.api].createData(this.modal.formData).then(() => {
+              this.closeModalAndReSearch();
+            });
+          })
         });
       }
     },
     closeModalAndReSearch() {
       this.closeModal(); // close model
-      this.search(); // reload data
+      this.getAll(); // reload data
     },
+    handleDelete() {
+      helper.validateForm(this.$refs[this.modal.formName], "Do you want to delete this project?").then(result => {
+        if (!result) return;
+        Api[this.api].delete(this.modal.formData).then(() => {
+          this.closeModalAndReSearch();
+        });
+      });
+    },
+    beforeSubmit() {}
   }
 };

@@ -130,7 +130,7 @@ const helper = {
    * @param {Object} _transaction トランザクション
    * @param {Object} _forceUpdate 古いデータを削除する
    */
-  insert: function (
+  insert: async function (
     _table,
     _data,
     _where = null,

@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     leader_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },

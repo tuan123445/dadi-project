@@ -3,6 +3,7 @@
     <ProjectManagementComponent
       :isManager="true"
       :title="'Project Management'"
+      :pageAPI="'projectManagement'"
     ></ProjectManagementComponent>
   </main>
 </template>

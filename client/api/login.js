@@ -20,5 +20,10 @@ export default {
     return Api().post("/api/login/checkRouter", value).then((rs) => {
       return rs.data;
     });
+  },
+  logOut(value) {
+    return Api().post("/api/login/logOut", value).then((rs) => {
+      return rs.data;
+    });
   }
 };

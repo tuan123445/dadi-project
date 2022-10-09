@@ -18,7 +18,7 @@
           </el-menu-item>
           <el-sub-menu v-if="item.children" :index="item.name">
             <template #title>{{ item.meta.name }}</template>
-            <template v-for="childItem in item.children" :key="childItem.name">
+            <template v-for="childItem in item.children" :key="childItem">
               <el-menu-item :index="item.children + '-' + childItem.name">
                 <RouterLink
                   :to="childItem.name"
@@ -57,6 +57,9 @@
 </template>
 
 <script>
+import Api from "../../api/index.js";
+import { consts } from "../../core/index";
+
 export default {
   created() {
     this.getMenuList();
@@ -70,13 +73,32 @@ export default {
   methods: {
     handleSelect() {},
     getMenuList() {
+      // let user_permission = this.$store._state.data.user_info.user_permision;
       var router = this.$router.options.routes;
       router[3].children.forEach((item) => {
+        // if (item.children && item.children.length > 0) {
+        //   item.children = item.children
+        //     .map((childItem) => {
+        //       if (childItem.meta.requireAdmin == true) {
+        //         if (
+        //           user_permission == consts.permisionList.council.value ||
+        //           user_permission == consts.permisionList.lorekeeper.value
+        //         ) {
+        //           return childItem;
+        //         }
+        //         return undefined;
+        //       }
+        //       return childItem;
+        //     })
+        //     .filter((f) => f != undefined);
+        // }
         this.menuItemList.push(item);
       });
     },
     signOut() {
-      this.$router.push("/login");
+      Api.login.logOut().then(() => {
+        this.$router.push({ name: "login" });
+      });
     },
     showProfile() {
       this.$router.push("/profile");

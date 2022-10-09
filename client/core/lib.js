@@ -12,12 +12,16 @@ export default {
     confirm: "confirm"
   },
   status: [{
+    value: 0,
+    label: "Submitted",
+    type: "info"
+  }, {
     value: 1,
     label: "Checked",
     type: "success"
   }, {
     value: 2,
-    label: "Unchecked",
+    label: "Rejected",
     type: "error"
   }],
   permisionList: [{

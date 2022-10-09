@@ -28,7 +28,7 @@ const router = createRouter({
       path: "/profile",
       name: routerName.profile,
       meta: {
-        requireLogin: true
+        requireLogin: true,
       },
       component: () => import("../views/public/profileView.vue")
     },
@@ -36,11 +36,11 @@ const router = createRouter({
       path: "/admin",
       name: "admin",
       meta: {
-        requireLogin: true
+        requireLogin: true,
       },
       component: () => import("../views/admin/shared/template.vue"),
       redirect: {
-        name: routerName.admin.project.projectManagment
+        name: routerName.admin.form.formSubmit
       },
       children: [{
           path: "/admin/project",
@@ -55,7 +55,8 @@ const router = createRouter({
             path: "/admin/projectManagement",
             meta: {
               name: "Project Management",
-              requireLogin: true
+              requireLogin: true,
+              requireAdmin: true
             },
             name: routerName.admin.project.projectManagment,
             component: () => import("../views/admin/projectManagement.vue")
@@ -63,7 +64,8 @@ const router = createRouter({
             path: "/admin/projectSubmit",
             meta: {
               name: "Project Submit",
-              requireLogin: true
+              requireLogin: true,
+              requireAdmin: false
             },
             name: routerName.admin.project.projectSubmit,
             component: () => import("../views/admin/projectSubmit.vue")
@@ -83,7 +85,8 @@ const router = createRouter({
               name: routerName.admin.form.formManagement,
               meta: {
                 name: "Form Management",
-                requireLogin: true
+                requireLogin: true,
+                requireAdmin: true
               },
               component: () => import("../views/admin/formManagement.vue")
             },
@@ -92,7 +95,8 @@ const router = createRouter({
               name: routerName.admin.form.formSubmit,
               meta: {
                 name: "Form Submit",
-                requireLogin: false
+                requireLogin: false,
+                requireAdmin: false
               },
               component: () => import("../views/admin/formSubmit.vue")
             }
@@ -113,7 +117,8 @@ const router = createRouter({
               name: routerName.admin.sugar.sugarManagement,
               meta: {
                 name: "Sugar Management",
-                requireLogin: true
+                requireLogin: true,
+                requireAdmin: true
               },
               component: () => import("../views/admin/sugarManagement.vue")
             },
@@ -122,7 +127,8 @@ const router = createRouter({
               name: routerName.admin.sugar.sugarRequest,
               meta: {
                 name: "Sugar Request",
-                requireLogin: false
+                requireLogin: false,
+                requireAdmin: false
               },
               component: () => import("../views/admin/sugarRequest.vue")
             }

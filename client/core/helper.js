@@ -96,7 +96,7 @@ helper.validateForm = function (ref, confirm = false) {
     }
 
     return ref.validate((valid) => {
-      if (!valid) return this.popup.error("Please input required input!", lib.popupType.error)
+      if (!valid) return this.popup.error("Have something wrong with your input. Please check it again", lib.popupType.error)
       if (!valid) return;
       if (confirm === false) return rex(true);
 

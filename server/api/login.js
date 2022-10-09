@@ -109,4 +109,11 @@ router.post("/checkDuplicate", (req, res) => {
   });
 });
 
+router.post("/logOut", (req, res) => {
+  if (req.cookies["token"]) {
+    res.clearCookie("token");
+  }
+  helper.response.json(res, {});
+});
+
 module.exports = router;

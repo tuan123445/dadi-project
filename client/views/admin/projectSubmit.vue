@@ -3,6 +3,7 @@
     <ProjectManagementComponent
       :isManager="false"
       :title="'Project Submit'"
+      :pageAPI="'projectSubmit'"
     ></ProjectManagementComponent>
   </main>
 </template>

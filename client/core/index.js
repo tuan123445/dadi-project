@@ -5,6 +5,7 @@ import helper from "./helper";
 import mixins from "./baseController";
 import filter from "./filter";
 import store from "./store";
+import consts from "./consts";
 
 export {
   rules,
@@ -12,5 +13,6 @@ export {
   helper,
   mixins,
   filter,
-  store
+  store,
+  consts
 };
