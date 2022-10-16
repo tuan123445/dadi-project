@@ -12,6 +12,16 @@ export default {
       return rs.data;
     });
   },
+  update(value) {
+    return Api().post("/api/projectManagement/update", value).then((rs) => {
+      return rs.data;
+    });
+  },
+  delete(value) {
+    return Api().post("/api/projectManagement/delete", value).then((rs) => {
+      return rs.data;
+    });
+  },
   getUserList(value) {
     return Api().post("/api/projectManagement/getUserList", value).then((rs) => {
       return rs.data;

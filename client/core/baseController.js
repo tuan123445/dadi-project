@@ -17,6 +17,7 @@ export default {
         formData: {},
         formName: "modalForm",
       },
+      searchData: {},
       tableData: [],
       loading: true,
     };
@@ -26,19 +27,38 @@ export default {
       this.loading = true;
       Api[this.api].getAll().then(rs => {
         if (rs && rs.length != 0) this.tableData = rs;
-        console.log(this.tableData);
         this.loading = false;
       });
     },
-    showModal(_editMode = false) {
-      return new Promise(res => {
-        this.modal.show = true;
-        this.modal.editMode = _editMode;
-        this.$nextTick(() => {
-          return res();
+    search() {
+      return new Promise(rex => rex()).then(() => {
+        this.beforeSearch();
+      }).then(() => {
+        Api[this.api].getAll(this.searchData).then(rs => {
+          this.tableData = rs;
         });
       });
     },
+    beforeSearch() {},
+    clearSearchData() {
+      this.searchData = helper.clearData(this.searchData);
+      Api[this.api].getAll().then(rs => {
+        this.tableData = rs;
+      });
+    },
+    showModal(_editMode = false) {
+      return new Promise(rex => rex())
+        .then(() => {
+          this.beforeShowModal();
+        }).then(rs => {
+          this.modal.show = true;
+          this.modal.editMode = _editMode;
+          this.$nextTick(() => {
+            return rs;
+          });
+        });
+    },
+    beforeShowModal() {},
     closeModal() {
       this.$refs[this.modal.formName].resetFields();
       this.modal.formData = helper.clearData(this.modal.formData);

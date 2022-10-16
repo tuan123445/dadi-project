@@ -73,6 +73,7 @@ export default {
   methods: {
     handleSelect() {},
     getMenuList() {
+      // comment
       // let user_permission = this.$store._state.data.user_info.user_permision;
       var router = this.$router.options.routes;
       router[3].children.forEach((item) => {

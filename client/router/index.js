@@ -170,6 +170,7 @@ const router = createRouter({
   ],
 });
 
+// comment
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some(rs => rs.meta.requireLogin) === true) {
 //     return Api.login.checkRouter().then(result => {

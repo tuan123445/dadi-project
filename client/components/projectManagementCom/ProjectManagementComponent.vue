@@ -19,8 +19,20 @@
           <el-form-item label="Category" prop="category">
             <el-input v-model="searchData.category"></el-input>
           </el-form-item>
-          <el-button class="clear-btn" type="info"> Clear </el-button>
-          <el-button class="search-btn" type="primary">
+          <el-form-item label="Status" prop="status">
+            <el-select v-model="searchData.status" placeholder="Select">
+              <el-option
+                v-for="item in $lib.status"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-button class="clear-btn" type="info" @click="clearSearchData()">
+            Clear
+          </el-button>
+          <el-button class="search-btn" type="primary" @click="search()">
             <i class="mdi mdi-magnify"></i>
             Search
           </el-button>
@@ -238,7 +250,11 @@
           </div>
           <div class="row mt-4">
             <div class="col-6">
-              <el-form-item label="Project Member" prop="member_name_list">
+              <el-form-item
+                label="Project Member"
+                prop="member_id_list"
+                :rules="[$rules.required]"
+              >
                 <el-select
                   v-model="modal.formData.member_id_list"
                   multiple
@@ -326,8 +342,6 @@ export default {
     return {
       api: this.pageAPI,
       pageTitle: this.title,
-      searchData: {},
-      tableData: [],
       statusList: lib.status,
       userList: [],
       userExistCheckRule: {

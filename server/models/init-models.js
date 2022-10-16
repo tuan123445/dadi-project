@@ -1,6 +1,7 @@
 var DataTypes = require("sequelize").DataTypes;
 var _form_per_week = require("./form_per_week");
 var _form_per_week_detail = require("./form_per_week_detail");
+var _form_per_week_lk_note = require("./form_per_week_lk_note");
 var _form_per_week_projects = require("./form_per_week_projects");
 var _form_sugar_per_week = require("./form_sugar_per_week");
 var _form_sugar_per_week_detail = require("./form_sugar_per_week_detail");
@@ -13,6 +14,7 @@ var _users_information = require("./users_information");
 function initModels(sequelize) {
   var form_per_week = _form_per_week(sequelize, DataTypes);
   var form_per_week_detail = _form_per_week_detail(sequelize, DataTypes);
+  var form_per_week_lk_note = _form_per_week_lk_note(sequelize, DataTypes);
   var form_per_week_projects = _form_per_week_projects(sequelize, DataTypes);
   var form_sugar_per_week = _form_sugar_per_week(sequelize, DataTypes);
   var form_sugar_per_week_detail = _form_sugar_per_week_detail(sequelize, DataTypes);
@@ -26,6 +28,7 @@ function initModels(sequelize) {
   return {
     form_per_week,
     form_per_week_detail,
+    form_per_week_lk_note,
     form_per_week_projects,
     form_sugar_per_week,
     form_sugar_per_week_detail,

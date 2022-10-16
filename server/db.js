@@ -54,7 +54,9 @@ const table = {
   projects_member: "projects_member",
   projects_information: "projects_information",
   form_per_week: "form_per_week",
+  form_per_week_lk_note: "form_per_week_lk_note",
   form_per_week_detail: "form_per_week_detail",
+  form_per_week_projects: "form_per_week_projects",
   form_sugar_per_week: "form_sugar_per_week",
   form_sugar_per_week_detail: "form_sugar_per_week_detail",
   shop: "shop"

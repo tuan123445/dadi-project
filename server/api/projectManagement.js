@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post("/getAll", (req, res) => {
   let body = req.body;
+
   let query = `
     SELECT pj.*, 
     user_info_leader.user_name as leader_name, 
@@ -26,6 +27,33 @@ router.post("/getAll", (req, res) => {
               ON u.user_id = pm.user_id
       ) as memberlist
         ON pj.project_id = memberlist.project_id
+  `;
+
+  if (body.project_name) {
+    query += `
+      WHERE pj.project_name = :project_name
+    `;
+  }
+
+  if (body.leader_id) {
+    query += `
+      WHERE pj.leader_id = :leader_id
+    `;
+  }
+
+  if (body.category) {
+    query += `
+      WHERE pj.category = :category
+    `;
+  }
+
+  if (body.status || body.status == 0) {
+    query += `
+      WHERE pj.status = :status
+    `;
+  }
+
+  query += `
     GROUP BY pj.project_id;
   `;
 
@@ -82,6 +110,62 @@ router.post("/getItemById", (req, res) => {
   });
 });
 
+router.post("/update", (req, res) => {
+  let body = req.body;
+  return db.sequelize.transaction((tx) => {
+    return new Promise(rex => rex()).then(() => {
+      const updateData = {
+        project_name: body.project_name,
+        category: body.category,
+        project_detail: body.project_detail,
+        leader_id: body.leader_id,
+        created_person_id: body.created_person_id,
+        project_link: body.project_link,
+        status: body.status
+      }
+
+      const where = {
+        project_id: body.project_id,
+      };
+
+      return db.helper.update(db.table.projects_information, updateData, where, tx).then(async () => {
+        return db.helper.physicalDelete(db.table.projects_member, where, tx).then(async () => {
+          if (body.member_id_list && body.member_id_list.length != 0) {
+            for (let i = 0; i < body.member_id_list.length; i++) {
+              let insertDataForProjectMember = {
+                project_id: body.project_id,
+                user_id: body.member_id_list[i]
+              }
+              await db.helper.insert(db.table.projects_member, insertDataForProjectMember, null, tx);
+            }
+          }
+          return helper.response.updated(res);
+        });
+      }).catch(err => {
+        return helper.response.error(res, err);
+      });
+    });
+  });
+});
+
+router.post("/delete", (req, res) => {
+  let body = req.body;
+
+  const where = {
+    project_id: body.project_id,
+  };
+
+  return db.sequelize.transaction((tx) => {
+    return new Promise(rex => rex()).then(() => {
+      return db.helper.physicalDelete(db.table.projects_information, where, tx).then(() => {
+        return db.helper.physicalDelete(db.table.projects_member, where, tx).then(() => {
+          return helper.response.updated(res);
+        });
+      });
+    });
+  });
+});
+
 router.post("/getUserList", (req, res) => {
   let body = req.body;
 
@@ -96,7 +180,7 @@ router.post("/getUserList", (req, res) => {
   }).catch(err => {
     return helper.response.error(res, err);
   });
-})
+});
 
 
 

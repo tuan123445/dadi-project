@@ -3,12 +3,12 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('projects_information', {
     project_id: {
       type: DataTypes.STRING(45),
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
     project_name: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false,
+      primaryKey: true
     },
     project_detail: {
       type: DataTypes.STRING(300),
@@ -53,8 +53,8 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "project_id" },
           { name: "leader_id" },
+          { name: "project_name" },
         ]
       },
     ]

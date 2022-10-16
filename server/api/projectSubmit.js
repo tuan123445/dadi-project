@@ -26,11 +26,40 @@ router.post("/getAll", (req, res) => {
               ON u.user_id = pm.user_id
       ) as memberlist
         ON pj.project_id = memberlist.project_id
+  `;
+  query += `WHERE `
+
+  if (body.project_name) {
+    query += `
+       pj.project_name = :project_name AND
+    `;
+  }
+
+  if (body.leader_id) {
+    query += `
+      pj.leader_id = :leader_id AND
+    `;
+  }
+
+  if (body.category) {
+    query += `
+      pj.category = :category AND
+    `;
+  }
+
+  if (body.status || body.status == 0) {
+    query += `
+      pj.status = :status AND
+    `;
+  }
+
+  query += `"" = ""`
+
+  query += `
     GROUP BY pj.project_id;
   `;
 
   db.sequelize.query(query, db.helper.getQueryOptions(body)).then(rs => {
-    console.log(rs);
     rs = rs.filter(f => f.project_id != null);
     return helper.response.json(res, rs);
 
@@ -57,25 +86,17 @@ router.post("/getItemById", (req, res) => {
   db.sequelize.query(query, db.helper.getQueryOptions(body)).then(rs => {
 
     let getMemberListQuery = `
-      SELECT pm.user_id, u.user_name
-      FROM projects_information as pj
-      INNER JOIN projects_member as pm
-      ON pj.project_id = pm.project_id
-      INNER JOIN users_information as u
-      ON u.user_id = pm.user_id
-      WHERE pj.project_id = :project_id
+      SELECT user_id FROM projects_member
+      WHERE project_id = :project_id;
     `;
 
     db.sequelize.query(getMemberListQuery, db.helper.getQueryOptions(body)).then(memberListResult => {
       var memberIdList = [];
-      var memberNameList = [];
 
       memberListResult.forEach(member => {
         memberIdList.push(member.user_id);
-        memberNameList.push(member.user_name);
       });
       rs[0].member_id_list = memberIdList;
-      rs[0].member_name_list = memberNameList;
       return helper.response.json(res, rs);
     });
   }).catch(err => {

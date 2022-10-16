@@ -3,6 +3,7 @@
     <FormManagementComponent
       :isManager="true"
       :title="'Form Management'"
+      :pageAPI="'formManagement'"
     ></FormManagementComponent>
   </main>
 </template>

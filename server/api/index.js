@@ -9,6 +9,6 @@ router.use("/shop", require("./shop"));
 router.use("/users", require("./users"));
 router.use("/projectManagement", require("./projectManagement"));
 router.use("/projectSubmit", require("./projectSubmit"));
-
+router.use("/formSubmit", require("./formSubmit"));
 
 module.exports = router;

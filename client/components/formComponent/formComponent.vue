@@ -7,14 +7,11 @@
       <div class="top-wrapper">
         <el-form class="search-area">
           <el-form-item
-            label="Id"
+            label="Name"
             style="margin-left: 0px !important"
-            prop="formId"
+            prop="userName"
           >
-            <el-input v-model="searchData.formId"></el-input>
-          </el-form-item>
-          <el-form-item label="Name" prop="userName">
-            <el-input v-model="searchData.userName"></el-input>
+            <el-input v-model="searchData.user_name"></el-input>
           </el-form-item>
           <el-form-item label="Week" prop="week">
             <el-input v-model="searchData.week"></el-input>
@@ -26,8 +23,10 @@
               placeholder="Pick a month and year"
             />
           </el-form-item>
-          <el-button class="clear-btn" type="info"> Clear </el-button>
-          <el-button class="search-btn" type="primary">
+          <el-button class="clear-btn" type="info" @click="clearSearchData()">
+            Clear
+          </el-button>
+          <el-button class="search-btn" type="primary" @click="search()">
             <i class="mdi mdi-magnify"></i>
             Search
           </el-button>
@@ -42,81 +41,121 @@
       <div class="table-wrapper">
         <el-card class="box-card">
           <el-table :data="tableData" border style="width: 100%" height="600px">
-            <el-table-column width="96" align="center">
+            <el-table-column width="100" align="center">
               <template v-slot="scope">
-                <el-button type="primary" @click="handleEdit(scope.row)"
-                  >Detail</el-button
-                >
+                <el-dropdown>
+                  <span>
+                    <el-button type="primary" style="width: 70px">
+                      More
+                      <i
+                        class="mdi mdi-chevron-down"
+                        style="margin-left: 5px; margin-right: unset"
+                      ></i>
+                    </el-button>
+                  </span>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>
+                        <el-button
+                          type="primary"
+                          @click="handleEdit(scope.row)"
+                          style="width: -webkit-fill-available"
+                          size="small"
+                          >Detail
+                        </el-button>
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-button
+                          type="info"
+                          @click="handleAddSugarShowDialog(scope.row)"
+                          style="width: -webkit-fill-available"
+                          size="small"
+                        >
+                          Add sugar
+                        </el-button>
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-button
+                          type="warning"
+                          @click="handleAddSugarShowDialog(scope.row)"
+                          size="small"
+                        >
+                          Leave Note
+                        </el-button>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
               </template>
             </el-table-column>
             <el-table-column
-              prop="formId"
-              label="Id"
+              prop="user_name"
+              label="User Name"
               width="100"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.formId }}
+                {{ scope.row.user_name }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="formWeekDate"
+              prop="week_date"
               label="Date"
               width="150"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.formWeekDate }}
+                {{ scope.row.week_date }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="doodinessWork"
+              prop="doodiness_work"
               label="Doodiness for this week"
               width="550"
               header-align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.doodinessWork }}
+                {{ scope.row.doodiness_work }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="friendShipSugar"
+              prop="friendship_sugar"
               label="Friendship Sugar"
               width="250"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.friendShipSugar }}
+                {{ scope.row.friendship_sugar }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="missionarySugar"
+              prop="missionary_sugar"
               label="Missionary Sugar"
               width="250"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.missionarySugar }}
+                {{ scope.row.missionary_sugar }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="projects"
+              prop="project_list"
               label="Projects"
               width="550"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.projects }}
+                {{ scope.row.project_list }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="projectsLink"
+              prop="project_link_list"
               label="Projects Link"
               width="450"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.projectsLink }}
+                {{ scope.row.project_link_list }}
               </template>
             </el-table-column>
             <el-table-column
@@ -130,43 +169,33 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="noteForLK"
+              prop="note_for_lk"
               label="Note for LoreKeeper"
               width="450"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.noteForLK }}
+                {{ scope.row.note_for_lk }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="overseerNote"
-              label="Overseer Note"
-              width="450"
-              align="center"
-            >
-              <template v-slot="scope">
-                {{ scope.row.overseerNote }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="earnedSugar"
+              prop="sugar_received"
               label="Sugars"
               width="250"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.earnedSugar }}
+                {{ scope.row.sugar_received }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="lkNote"
+              prop="lk_note"
               label="LoreKeeper Notes"
               width="650"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.lkNote }}
+                {{ scope.row.lk_note }}
               </template>
             </el-table-column>
             <el-table-column
@@ -186,23 +215,23 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="dateCreated"
+              prop="date_created"
               label="Date Created"
               width="120"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.dateCreated }}
+                {{ $filter.dateConvert(scope.row.date_created) }}
               </template>
             </el-table-column>
             <el-table-column
-              prop="dateUpdated"
+              prop="date_updated"
               label="Date Updated"
               width="120"
               align="center"
             >
               <template v-slot="scope">
-                {{ scope.row.dateUpdated }}
+                {{ $filter.dateConvert(scope.row.date_updated) }}
               </template>
             </el-table-column>
           </el-table>
@@ -215,15 +244,19 @@
         :close-on-click-modal="false"
         :close-on-press-escape="false"
       >
-        <el-form :ref="modal.formName">
+        <el-form :ref="modal.formName" :model="modal.formData">
           <div class="row mt-4">
             <div class="col-6">
-              <el-form-item label="Week" prop="week">
+              <el-form-item label="Week" prop="week" :rules="[$rules.required]">
                 <el-input v-model="modal.formData.week"></el-input>
               </el-form-item>
             </div>
             <div class="col-6">
-              <el-form-item label="Month & Year" prop="monthYear">
+              <el-form-item
+                label="Month & Year"
+                prop="monthYear"
+                :rules="[$rules.required]"
+              >
                 <el-date-picker
                   v-model="modal.formData.monthYear"
                   type="month"
@@ -234,9 +267,13 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Doodiness for this week">
+              <el-form-item
+                label="Doodiness for this week"
+                prop="doodiness_work"
+                :rules="[$rules.required]"
+              >
                 <el-input
-                  v-model="modal.formData.doodinessWork"
+                  v-model="modal.formData.doodiness_work"
                   :clearable="true"
                   :placeholder="$lib.formPlaceHolderMessage.doodinessMess"
                   type="textarea"
@@ -246,9 +283,9 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Friendship SUGAR" prop="friendShipSugar">
+              <el-form-item label="Friendship SUGAR" prop="friendship_sugar">
                 <el-input
-                  v-model="modal.formData.friendShipSugar"
+                  v-model="modal.formData.friendship_sugar"
                   :clearable="true"
                   :placeholder="$lib.formPlaceHolderMessage.friendShipSugar"
                   type="textarea"
@@ -258,9 +295,9 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Missionary SUGAR" prop="missionarySugar">
+              <el-form-item label="Missionary SUGAR" prop="missionary_sugar">
                 <el-input
-                  v-model="modal.formData.missionarySugar"
+                  v-model="modal.formData.missionary_sugar"
                   :clearable="true"
                   :placeholder="$lib.formPlaceHolderMessage.missionarySugar"
                   type="textarea"
@@ -270,7 +307,11 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Project List" prop="projectList">
+              <el-form-item
+                label="Project List"
+                prop="projectList"
+                :rules="[$rules.required]"
+              >
                 <el-select
                   v-model="modal.formData.projectList"
                   filterable
@@ -279,9 +320,9 @@
                 >
                   <el-option
                     v-for="item in projectList"
-                    :key="item.projectId"
-                    :label="item.projectName"
-                    :value="item.projectId"
+                    :key="item.project_id"
+                    :label="item.project_name"
+                    :value="item.project_id"
                   >
                   </el-option>
                 </el-select>
@@ -301,9 +342,9 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Dadi event RSVP" prop="dadiEventRsvp">
+              <el-form-item label="Dadi event RSVP" prop="dadi_event_rsvp">
                 <el-input
-                  v-model="modal.formData.dadiEventRsvp"
+                  v-model="modal.formData.dadi_event_rsvp"
                   :clearable="true"
                   :placeholder="$lib.formPlaceHolderMessage.dadiEventRsvp"
                   type="textarea"
@@ -313,9 +354,9 @@
           </div>
           <div class="row mt-4">
             <div class="col-12">
-              <el-form-item label="Note for LoreKeeper" prop="noteForLK">
+              <el-form-item label="Note for LoreKeeper" prop="note_for_lk">
                 <el-input
-                  v-model="modal.formData.noteForLK"
+                  v-model="modal.formData.note_for_lk"
                   :clearable="true"
                   :placeholder="$lib.formPlaceHolderMessage.noteForLK"
                   type="textarea"
@@ -324,13 +365,47 @@
             </div>
           </div>
           <div class="bottom-btn mt-5">
-            <el-button type="info" v-if="modal.editMode == true">
-              <i class="mdi mdi-plus"></i>
-              Add sugar
+            <el-button
+              type="danger"
+              @click="handleDelete()"
+              v-if="modal.editMode"
+            >
+              <i class="mdi mdi-delete"></i>
+              Delete
             </el-button>
-            <el-button type="success">
+            <el-button type="success" @click="handleCheckAndConfirm()">
               <i class="mdi mdi-content-save-check"></i>
               Submit
+            </el-button>
+          </div>
+        </el-form>
+      </el-dialog>
+      <el-dialog
+        title="Sugar Add"
+        v-model="formAddSugar.show"
+        :before-close="closeSugarModal"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+      >
+        <el-form :ref="formAddSugar.name" :model="formAddSugar.formData">
+          <div class="row mt-4">
+            <div class="col-12">
+              <el-form-item
+                label="Sugar"
+                prop="sugar_received"
+                :rules="[$rules.required]"
+              >
+                <el-input
+                  v-model="formAddSugar.formData.sugar_received"
+                  placeholder="How many sugar you want to give?"
+                ></el-input>
+              </el-form-item>
+            </div>
+          </div>
+          <div class="bottom-btn mt-5">
+            <el-button type="success" @click="handleAddSugar()">
+              <i class="mdi mdi-delete"></i>
+              Add
             </el-button>
           </div>
         </el-form>
@@ -341,7 +416,8 @@
 
 <script>
 import FontChangeCom from "../../components/ApeironFontChangeCom.vue";
-import { mixins } from "../../core/index";
+import { helper, mixins } from "../../core/index";
+import Api from "../../api/index.js";
 
 export default {
   props: {
@@ -353,45 +429,82 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    pageAPI: {
+      type: String,
+      default: () => "",
+    },
   },
   components: {
     FontChangeCom: FontChangeCom,
   },
   mixins: [mixins],
+  created() {
+    this.getAll();
+  },
   data() {
     return {
+      api: this.pageAPI,
       pageTitle: this.title,
       searchData: {},
-      tableData: [
-        {
-          formId: "UGBQS",
-          formWeekDate: "week 4 of 2022-09",
-          doodinessWork:
-            "1. Stay active in general \n 2.Participate in derby marble and won 50 usd",
-          friendShipSugar: "SiByLz#2504 (She have a kid just like u Frank)",
-          missionarySugar: "",
-          projects: "",
-          projectsLink: "",
-          partner:
-            "Bbounceeee#4325, 84994luaP#4550 and s2obboss#5764 for my 19 yo proj",
-          noteForLK:
-            "For the project that i have been posting for the last 5 weeks im still waiting for my friend to translate the proposal because it's a group project and i have less time to do it because the uni is now open. And Im currently a sophomore in industrial engineering at chulalongkorn university (u can search the uni name :))  And my name is not Lua my name is Paul haha luaP is Paul spell backward lol u can called me Paul :)To enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortcuts, press Ctrl+slash",
-          overseerNote: "",
-          earnedSugar: "1 for doodiness",
-          lkNote:
-            "Thanks for replying to my note Paul! Glad to learn your name! Well school is always more important and uni is one of the best times of ones life, so enjoy it and spend more time over there doing hot fiery stuff. I can always wait for the proposal to happen, got a lot going on with my days already haha.To enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortcuts, press Ctrl+slash",
-          status: 2,
-          dateCreated: "2022-08-30",
-          dateUpdated: "2022-08-30",
-        },
-      ],
-      projectList: [
-        { projectName: "project A", projectId: "1" },
-        { projectName: "project B", projectId: "2" },
-        { projectName: "project C", projectId: "3" },
-        { projectName: "project D", projectId: "4" },
-      ],
+      tableData: [],
+      projectList: [],
+      formAddSugar: {
+        name: "formAddSugar",
+        show: false,
+        formData: {},
+      },
     };
+  },
+  methods: {
+    beforeSearch() {
+      let date = new Date(this.searchData.monthYear);
+      this.searchData.month = date.getMonth() + 1;
+      this.searchData.year = date.getFullYear();
+    },
+    beforeShowModal() {
+      Api[this.api].getProjectList().then((rs) => {
+        this.projectList = rs;
+      });
+    },
+    handleCheckAndConfirm() {
+      if (!this.modal.editMode) {
+        return Api[this.api].checkFormExist(this.modal.formData).then((rs) => {
+          if (rs) {
+            return helper.popup.error(
+              "This form was created before. Please check Week and Date AGAIN",
+              "Duplicate Form"
+            );
+          }
+        });
+      }
+      this.handleConfirm();
+    },
+    handleAddSugarShowDialog(row) {
+      if (row.sugar_received) {
+        this.formAddSugar.formData.sugar_received = row.sugar_received;
+      }
+      this.formAddSugar.formData.form_id = row.form_id;
+      this.formAddSugar.show = true;
+    },
+    closeSugarModal() {
+      this.$refs[this.formAddSugar.name].resetFields();
+      this.formAddSugar.formData = helper.clearData(this.formAddSugar.formData);
+      this.$nextTick(() => (this.formAddSugar.show = false));
+    },
+    handleAddSugar() {
+      helper
+        .validateForm(
+          this.$refs[this.formAddSugar.name],
+          "Do you want to update sugar?"
+        )
+        .then((rs) => {
+          if (!rs) return;
+          Api[this.api].addSugar(this.formAddSugar.formData).then(() => {
+            this.closeSugarModal();
+            this.getAll();
+          });
+        });
+    },
   },
 };
 </script>
