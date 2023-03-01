@@ -13,11 +13,11 @@ database:
     port: 3306
     database: dadi_manager
     username: root
-    password: root
+    password: tuan123445
 
   production: # Production database
     host: localhost
     port: 3306
     database: dadi_manager
     username: root
-    password: root
+    password: tuan123445

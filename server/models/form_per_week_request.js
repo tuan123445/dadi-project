@@ -2,7 +2,12 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('form_per_week_request', {
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(45),
+      allowNull: false,
+      primaryKey: true
+    },
+    form_id: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },
@@ -18,11 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     week: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    form_id: {
-      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },

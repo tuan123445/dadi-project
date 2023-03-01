@@ -23,7 +23,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     form_id: {
       type: DataTypes.STRING(45),
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     date_created: {
       type: DataTypes.DATE,
@@ -47,6 +48,7 @@ module.exports = function(sequelize, DataTypes) {
           { name: "year" },
           { name: "month" },
           { name: "week" },
+          { name: "form_id" },
         ]
       },
     ]

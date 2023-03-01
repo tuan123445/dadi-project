@@ -6,11 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    itemExchangeList: {
-      type: DataTypes.STRING(500),
-      allowNull: true
-    },
-    form_detail: {
+    item_exchange_list: {
       type: DataTypes.STRING(500),
       allowNull: true
     },

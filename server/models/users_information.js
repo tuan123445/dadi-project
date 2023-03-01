@@ -20,10 +20,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    role: {
-      type: DataTypes.STRING(45),
-      allowNull: true
-    },
     sugar_balance: {
       type: DataTypes.INTEGER,
       allowNull: true
@@ -32,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    date_updated: {
+    date_update: {
       type: DataTypes.DATE,
       allowNull: true
     }

@@ -8,15 +8,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     user_email: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false
     },
     user_permision: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     date_created: {
       type: DataTypes.DATE,

@@ -6,6 +6,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    form_id: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+      primaryKey: true
+    },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -20,10 +25,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    form_id: {
-      type: DataTypes.STRING(45),
-      allowNull: false
     },
     sugar_received: {
       type: DataTypes.INTEGER,
@@ -48,6 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "user_id" },
+          { name: "form_id" },
           { name: "year" },
           { name: "month" },
           { name: "week" },

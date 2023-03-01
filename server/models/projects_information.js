@@ -5,6 +5,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false
     },
+    leader_id: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+      primaryKey: true
+    },
     project_name: {
       type: DataTypes.STRING(45),
       allowNull: false,
@@ -21,11 +26,6 @@ module.exports = function(sequelize, DataTypes) {
     category: {
       type: DataTypes.STRING(45),
       allowNull: true
-    },
-    leader_id: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-      primaryKey: true
     },
     created_person_id: {
       type: DataTypes.STRING(45),

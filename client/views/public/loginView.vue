@@ -124,12 +124,13 @@ export default {
     login() {
       helper.validateForm(this.$refs[this.modal.formName]).then((result) => {
         if (result === false) return;
-        Api.login.auth(this.modal.formData).then((rs) => {
-          if (rs.status === true) {
-            return this.$router.push({ name: "projectSubmit" });
-          }
-          return helper.toast.error(rs.mes);
-        });
+        // Api.login.auth(this.modal.formData).then((rs) => {
+        //   if (rs.status === true) {
+        //     return this.$router.push({ name: "projectSubmit" });
+        //   }
+        //   return helper.toast.error(rs.mes);
+        // });
+        return this.$router.push({ name: "projectSubmit" });
       });
     },
     signIn() {

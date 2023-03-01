@@ -2,20 +2,20 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('projects_request_information', {
     project_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(45),
+      allowNull: false
+    },
+    leader_id: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },
-    leader_id: {
-      type: DataTypes.INTEGER,
+    project_name: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
     },
     created_person_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    project_name: {
       type: DataTypes.STRING(45),
       allowNull: true
     },
@@ -49,8 +49,8 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "project_id" },
           { name: "leader_id" },
+          { name: "project_name" },
         ]
       },
     ]

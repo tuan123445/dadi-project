@@ -34,4 +34,4 @@ npm run build
 npm run lint
 ```
 
-node ./node_modules/sequelize-auto/bin/sequelize-auto -o ./server/models -h localhost -p 3306 -d dadi_manager -u root -x root -e mysql
+node ./node_modules/sequelize-auto/bin/sequelize-auto -o ./server/models -h localhost -p 3306 -d dadi_manager -u root -x tuan123445 -e mysql
