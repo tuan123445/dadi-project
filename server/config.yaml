@@ -9,7 +9,7 @@ database:
   enableSyncTable: false
 
   development: # Development database
-    host: localhost
+    host: dadi-manager.crme0xjmd0tb.us-west-1.rds.amazonaws.com
     port: 3306
     database: dadi_manager
     username: root

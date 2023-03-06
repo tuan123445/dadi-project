@@ -6,6 +6,7 @@ import users from "./users";
 import projectManagement from "./projectManagement";
 import projectSubmit from "./projectSubmit";
 import formSubmit from "./formSubmit";
+import formManagement from "./formManagement";
 export default {
   calendar: calendar,
   login: login,
@@ -13,5 +14,6 @@ export default {
   users: users,
   projectManagement: projectManagement,
   projectSubmit: projectSubmit,
-  formSubmit: formSubmit
+  formSubmit: formSubmit,
+  formManagement: formManagement
 };

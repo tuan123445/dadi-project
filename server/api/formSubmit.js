@@ -13,10 +13,9 @@ const {
 
 router.post("/getAll", (req, res) => {
   let body = req.body;
+  console.log(body);
   let query = `
-  SELECT form_detail.*, form.year, form.month, form.week, form.sugar_received, form_lk_note.lk_note, user.user_name,
-    GROUP_CONCAT(project_list.project_name) as project_list,
-    GROUP_CONCAT(project_list.project_link) as project_link_list
+  SELECT form_detail.*, form.year, form.month, form.week, form.sugar_received, form_lk_note.lk_note, user.user_name
   FROM form_per_week as form
   LEFT JOIN form_per_week_detail as form_detail
   ON form.form_id = form_detail.form_id
@@ -58,9 +57,6 @@ router.post("/getAll", (req, res) => {
   query += `"" = ""`
 
 
-  query += `
-    GROUP BY form.form_id
-  `;
   db.sequelize.query(query, db.helper.getQueryOptions(body)).then(rs => {
     if (rs) {
       rs = rs.map(item => {

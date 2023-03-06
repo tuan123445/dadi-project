@@ -10,5 +10,6 @@ router.use("/users", require("./users"));
 router.use("/projectManagement", require("./projectManagement"));
 router.use("/projectSubmit", require("./projectSubmit"));
 router.use("/formSubmit", require("./formSubmit"));
+router.use("/formManagement", require("./formManagement"));
 
 module.exports = router;

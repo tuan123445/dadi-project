@@ -162,21 +162,38 @@ export default {
   components: {
     FontChangeCom: FontChangeCom,
   },
-  mixins: [mixins],
+  // mixins: [mixins],
   created() {
-    this.getAll();
+    // this.getAll();
   },
   data() {
     return {
+      modal: {
+        editMode: false,
+        show: false,
+        formData: {},
+        formName: "modalForm",
+      },
       pageTitle: "Dadi's Shop",
+      tableData: [{
+        item_id: 1,
+        item_name: "mBH",
+        item_detail: "2 sugar for 1 mBH. No limited. FCFS",
+        item_cost: 2,
+        quantity: 100
+      }]
     };
   },
   methods: {
-    getAll() {
-      Api.shop.getAll().then((rs) => {
-        this.tableData = rs;
-      });
-    },
+    // getAll() {
+    //   Api.shop.getAll().then((rs) => {
+    //     this.tableData = rs;
+    //   });
+    // },
+    handleEdit(){
+      this.modal.show = true;
+      this.modal.formData = this.tableData[0]
+    }
   },
 };
 </script>
